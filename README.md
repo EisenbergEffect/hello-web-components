@@ -255,8 +255,8 @@ Finally, since `adoptedStyleSheets` is not yet implemented in all browser (I'm l
 ## Resources
 
 * [Building Components](https://developers.google.com/web/fundamentals/web-components) - A series of articles from Google on building Web Components.
-* [Microsoft's FAST-DNA Project](https://github.com/microsoft/fast-dna) - Where you will find the `fast-element` library source as well as the source for `fast-components`. Both are available in beta form on NPM.
-* [FAST Element Documentation](https://github.com/microsoft/fast-dna/blob/master/packages/web-components/fast-element/docs/building-components.md) - Preliminary docs on how to build your own Web Components with `fast-element` to reduce boilerplate, sync state, and efficiently render HTML and CSS.
+* [Microsoft's FAST](https://github.com/microsoft/fast) - Where you will find the `fast-element` library source as well as the source for `fast-components`. Both are available in beta form on NPM.
+* [FAST Documentation](https://fast.design/docs/introduction/) - Docs on how to build your own Web Components with `fast-element` to reduce boilerplate, sync state, and efficiently render HTML and CSS.
 * [About ::slotted](https://developer.mozilla.org/en-US/docs/Web/CSS/::slotted()) - More information on using `slotted()` to style the content of your element.
 * [About ::part](https://developer.mozilla.org/en-US/docs/Web/CSS/::part) - More information on how to expose "parts" of your Shadow DOM for external styling.
 * [About CSS Contain](https://developer.mozilla.org/en-US/docs/web/css/contain) - Information on CSS containment, for improving component performance.
