@@ -248,9 +248,12 @@ Congratulations! You've created a a W3C standard platform Web Component with an 
 
 ## Going Deeper
 
-### CSS Variables
+### CSS Custom Properties (aka CSS Variables)
 
-A common way to enable custom elements to be styled is to base component styles on CSS Variables (aka CSS Custom Properties). Variables are declared with the `--` prefix and referenced with the `var(...)` function. When referencing a variable, you can also provide a fallback value, which itself can be another variable. You can see this technique used throughout the CSS above. To play with this, create several `<name-tag>` elements on your page and then use the browser's style inspector to set `--color`, `--depth`, and `--radius` properties on individual elements or on parent elements. Even though Shadow DOM encapsulates styles, CSS Variables "pierce" the Shadow DOM boundary by default. This makes it possible to create a theming system that works across an entier component library or application.
+A common way to enable custom elements to be styled is to base component styles on CSS Custom Properties (aka CSS Variables). Custom Properties are declared with the `--` prefix and referenced with the `var(...)` function. When referencing a variable, you can also provide a fallback value, which itself can be another variable. You can see this technique used throughout the CSS above. To play with this, create several `<name-tag>` elements on your page and then use the browser's style inspector to set `--color`, `--depth`, and `--radius` properties on individual elements or on parent elements. Even though Shadow DOM encapsulates styles, CSS Variables "pierce" the Shadow DOM boundary by default. This makes it possible to create a theming system that works across an entire component library or application. And remember, CSS Custom Properties can be used together with CSS Calc for amazing affects.
+
+* [Read more about CSS Custom Properties on MDN.](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
+* [Read more about CSS Calc on MDN.](https://developer.mozilla.org/en-US/docs/Web/CSS/calc)
 
 ### Shadow DOM CSS Selectors
 
@@ -262,13 +265,19 @@ Shadow DOM styles can also leverage special selectors, such as the `:host`, whic
 
 ### Adopted Style Sheeets
 
-Finally, since `adoptedStyleSheets` is not yet implemented in all browser (I'm looking at you Safari), for any production components you make, you'll want to feature detect and fallback to style injection if needed. This is something that many Web Component libraries handle for you automatically.
+Since `adoptedStyleSheets` is not yet implemented in all browsers (I'm looking at you Safari!), for any production components you make, you'll want to feature detect and fallback to style injection if needed. This is something that many Web Component libraries (e.g. FAST) handle for you automatically.
 
 * [Read more about adopted style sheets on MDN.](https://developer.mozilla.org/en-US/docs/Web/API/ShadowRoot/adoptedStyleSheets)
 
 ### Parts
 
-You may have noticed that several elements in the component's shadow DOM have a `part` attribute. This allows a web component developer to declare parts of the component that can be styled externally by consumers of the component.
+You may have noticed that several elements in the component's shadow DOM have a `part` attribute. This allows a web component developer to declare parts of the component that can be styled externally by consumers of the component. To try it out, create several `<name-tag>` elements on your page, each with a different `class`. Then create CSS that targets parts based on a class selector and adjusts the greeting styles. Here's what that might look like:
+
+```css
+.large-greeting::part(greeting) {
+  font-size: 64px;
+}
+```
 
 * [Read more about ::part on MDN.](https://developer.mozilla.org/en-US/docs/Web/CSS/::part)
 
