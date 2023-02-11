@@ -286,10 +286,10 @@ You may have noticed that several elements in the component's shadow DOM have a 
 As mentioned earlier, the amount of boilerplate involved when creating a simple Web Component seems a bit much. This is because the Web Component standards provide you with the low-level capabilities to create components, but otherwise make no assumptions about how you will implement your component internally. Many people will use a Web Component helper library, such as FAST, to streamline the creation process and provide them with additional tools for building more complex solutions. Here's how the same `NameTag` Web Component would be implemented with FAST, using TypeScript:
 
 ```ts
-import { attr, css, FASTElement, html } from "@microsoft/fast-element";
+import { attr, css, customElement, FASTElement, html } from "@microsoft/fast-element";
 
 // Create a reactive template based on the element's state.
-const template = html<NameTage>`
+const template = html<NameTag>`
   <div part="header" class="header">
     <h3 part="greeting">${x => x.greeting.toUpperCase()}</h3>
     <h4 part="message">my name is</h4>
@@ -354,14 +354,14 @@ const styles = css`
     bord
 `;
 
-// Define the element by providing the tag name, template and styles.
+// Define the element by providing the tag name, template, and styles.
 @customElement({
   name: "name-tag",
   template,
   styles
 })
-export class NameTag extends FASTElement { // The base class removed boilerplate.
-  @attr greeting = "Hello"; // A reactive HTML attribute with default value.
+export class NameTag extends FASTElement { // The base class removes boilerplate.
+  @attr greeting = "Hello"; // A reactive HTML attribute with default a value.
 }
 ```
 
