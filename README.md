@@ -4,7 +4,7 @@ Let's build a Web Component! I like to start with something simple that many of 
 
 ![Name Tag Example Image](./img/example.png)
 
-Below I'll provide step by step directions, code samples, and a few notes. See the Resources section at the end of this document for links to further reading and related libraries.
+Below I'll provide step by step directions, code samples, and a few notes.
 
 ## Step Zero
 
@@ -151,16 +151,16 @@ customElements.define('name-tag', NameTag);
 
 ```JavaScript
 const render = x => `
-  <div class="header">
-    <h3>${x.greeting.toUpperCase()}</h3>
-    <h4>my name is</h4>
+  <div part="header" class="header">
+    <h3 part="greeting">${x.greeting.toUpperCase()}</h3>
+    <h4 part="message">my name is</h4>
   </div>
 
-  <div class="body">
+  <div part="body" class="body">
     <slot></slot>
   </div>
 
-  <div class="footer"></div>
+  <div part="footer" class="footer"></div>
 `;
 ```
 
@@ -246,25 +246,34 @@ constructor() {
 
 Congratulations! You've created a a W3C standard platform Web Component with an encapsulted Shadow DOM for HTML and CSS rendering, attribute reaactivity, and lifecycle intgration.
 
-### Notes
+## Going Deeper
 
-#### CSS Variables
+### CSS Variables
 
 A common way to enable custom elements to be styled is to base component styles on CSS Variables (aka CSS Custom Properties). Variables are declared with the `--` prefix and referenced with the `var(...)` function. When referencing a variable, you can also provide a fallback value, which itself can be another variable. You can see this technique used throughout the CSS above. To play with this, create several `<name-tag>` elements on your page and then use the browser's style inspector to set `--color`, `--depth`, and `--radius` properties on individual elements or on parent elements. Even though Shadow DOM encapsulates styles, CSS Variables "pierce" the Shadow DOM boundary by default. This makes it possible to create a theming system that works across an entier component library or application.
 
-#### Shadow DOM CSS Selectors
+### Shadow DOM CSS Selectors
 
 Shadow DOM styles can also leverage special selectors, such as the `:host`, which targets the element itself. It's a best practice to set up host styles for the default `display` and `disabled` states. Check out the `contain` CSS property for ways to improve component render performance as well. If you have special styles for elements placed inside the content of your element, you can specify those by using the `::slotted()` selector.
 
-#### Adopted Style Sheeets
+* [Read more about :host on MDN.](https://developer.mozilla.org/en-US/docs/Web/CSS/:host)
+* [Read more about ::slotted on MDN.](https://developer.mozilla.org/en-US/docs/Web/CSS/::slotted)
+* [Read more about CSS Contain on MDN.](https://developer.mozilla.org/en-US/docs/web/css/contain)
+
+### Adopted Style Sheeets
 
 Finally, since `adoptedStyleSheets` is not yet implemented in all browser (I'm looking at you Safari), for any production components you make, you'll want to feature detect and fallback to style injection if needed. This is something that many Web Component libraries handle for you automatically.
 
-## Resources
+* [Read more about adopted style sheets on MDN.](https://developer.mozilla.org/en-US/docs/Web/API/ShadowRoot/adoptedStyleSheets)
 
-* [Building Components](https://developers.google.com/web/fundamentals/web-components) - A series of articles from Google on building Web Components.
-* [Microsoft's FAST](https://github.com/microsoft/fast) - Where you will find the `fast-element` library source as well as the source for `fast-foudation`. Both are available  on NPM.
-* [FAST Documentation](https://www.fast.design/docs/introduction/) - Docs on how to build your own Web Components with `fast-element` to reduce boilerplate, sync state, and efficiently render HTML and CSS.
-* [About ::slotted](https://developer.mozilla.org/en-US/docs/Web/CSS/::slotted()) - More information on using `slotted()` to style the content of your element.
-* [About ::part](https://developer.mozilla.org/en-US/docs/Web/CSS/::part) - More information on how to expose "parts" of your Shadow DOM for external styling.
-* [About CSS Contain](https://developer.mozilla.org/en-US/docs/web/css/contain) - Information on CSS containment, for improving component performance.
+### Parts
+
+You may have noticed that several elements in the component's shadow DOM have a `part` attribute. This allows a web component developer to declare parts of the component that can be styled externally by consumers of the component.
+
+* [Read more about ::part on MDN.](https://developer.mozilla.org/en-US/docs/Web/CSS/::part)
+
+## Additional Resources
+
+* [FAST on GitHub](https://github.com/microsoft/fast)
+* [FAST Documentation](https://www.fast.design/docs/introduction/)
+
