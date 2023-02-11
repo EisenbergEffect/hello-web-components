@@ -281,8 +281,99 @@ You may have noticed that several elements in the component's shadow DOM have a 
 
 * [Read more about ::part on MDN.](https://developer.mozilla.org/en-US/docs/Web/CSS/::part)
 
-## Additional Resources
+## Bonus: FAST NameTag
 
-* [FAST on GitHub](https://github.com/microsoft/fast)
-* [FAST Documentation](https://www.fast.design/docs/introduction/)
+As mentioned earlier, the amount of boilerplate involved when creating a simple Web Component seems a bit much. This is because the Web Component Standards provide you with the low-level capabilities to create components, but otherwise make no assumptions about how you will implement your component internally. Many people will use a Web Component helpder library, such as FAST, to streamline the creation process and provide them with additional tools for building more complex solutions. Here's how the same `NameTag` Web Component would be implemented with FAST using TypeScript.
+
+```ts
+import { attr, css, FASTElement, html } from "@microsoft/fast-element";
+
+// Create a reactive template based on the element's state.
+const template = html<NameTage>`
+  <div part="header" class="header">
+    <h3 part="greeting">${x => x.greeting.toUpperCase()}</h3>
+    <h4 part="message">my name is</h4>
+  </div>
+
+  <div part="body" class="body">
+    <slot></slot>
+  </div>
+
+  <div part="footer" class="footer"></div>
+`;
+
+// Create styles that automatically use adopted style sheets when present.
+const styles = css`
+  :host {
+    --default-color: red;
+    --default-radius: 6px;
+    --default-depth: 5px;
+
+    display: inline-block;
+    contain: content;
+    color: white;
+    background: var(--color, var(--default-color));
+    border-radius: var(--radius, var(--default-radius));
+    min-width: 325px;
+    text-align: center;
+    box-shadow: 0 0 var(--depth, var(--default-depth)) rgba(0,0,0,.5);
+  }
+
+  .header {
+    margin: 16px 0;
+    position: relative;
+  }
+
+  h3 {
+    font-weight: bold;
+    font-family: sans-serif;
+    letter-spacing: 4px;
+    font-size: 32px;
+    margin: 0;
+    padding: 0;
+  }
+
+  h4 {
+    font-family: sans-serif;
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .body {
+    background: white;
+    color: black;
+    padding: 32px 8px;
+    font-size: 42px;
+    font-family: cursive;
+  }
+
+  .footer {
+    height: 16px;
+    background: var(--color, var(--default-color));
+    bord
+`;
+
+// Define the element by providing the tag name, template and styles.
+@customElement({
+  name: "name-tag",
+  template,
+  styles
+})
+export class NameTag extends FASTElement { // The base class removed boilerplate.
+  @attr greeting = "Hello"; // A reactive HTML attribute with default value.
+}
+```
+
+Notice how all the boilerplate goes away. Here's what FAST does for you:
+
+* Templates - FAST provides a high performance, reactivity-based template engine.
+* Styles - FAST automatically detects the presence of adopted style sheets and uses it if possible. It also caches and reuses style sheet instances across Web Component instances.
+* FASTElement - The base class automatically setups up the Shadow DOM and hooks into the lifecycle to handle rendering with the provided template. The decorator provides a declarative way to connect your template, styles, and class, while registering them with the platform using the provided name.
+* Attributes - Instead of having to manually declare a getter/setter, setup the `observedAttributes` array, and handle default values and attribute change callbacks, you simpley decorate a field with `@attr` and `FASTElement` handles that all for you.
+
+This is only a small example of how FAST can help you build modern Web Components. It has much more to offer, especially if you want to build entire design systems, or full applications with routing, SSR, dependency injection, and advanced state management.
+
+* [Find FAST here on GitHub.](https://github.com/microsoft/fast)
+* [Explore the full FAST Documentation.](https://www.fast.design/docs/introduction/)
 
