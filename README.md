@@ -283,7 +283,7 @@ You may have noticed that several elements in the component's shadow DOM have a 
 
 ## Bonus: FAST NameTag
 
-As mentioned earlier, the amount of boilerplate involved when creating a simple Web Component seems a bit much. This is because the Web Component Standards provide you with the low-level capabilities to create components, but otherwise make no assumptions about how you will implement your component internally. Many people will use a Web Component helpder library, such as FAST, to streamline the creation process and provide them with additional tools for building more complex solutions. Here's how the same `NameTag` Web Component would be implemented with FAST using TypeScript.
+As mentioned earlier, the amount of boilerplate involved when creating a simple Web Component seems a bit much. This is because the Web Component standards provide you with the low-level capabilities to create components, but otherwise make no assumptions about how you will implement your component internally. Many people will use a Web Component helper library, such as FAST, to streamline the creation process and provide them with additional tools for building more complex solutions. Here's how the same `NameTag` Web Component would be implemented with FAST, using TypeScript:
 
 ```ts
 import { attr, css, FASTElement, html } from "@microsoft/fast-element";
@@ -365,15 +365,15 @@ export class NameTag extends FASTElement { // The base class removed boilerplate
 }
 ```
 
-Notice how all the boilerplate goes away. Here's what FAST does for you:
+Notice how all the boilerplate goes away. Here's what FAST is doing for you:
 
-* Templates - FAST provides a high performance, reactivity-based template engine.
-* Styles - FAST automatically detects the presence of adopted style sheets and uses it if possible. It also caches and reuses style sheet instances across Web Component instances.
-* FASTElement - The base class automatically setups up the Shadow DOM and hooks into the lifecycle to handle rendering with the provided template. The decorator provides a declarative way to connect your template, styles, and class, while registering them with the platform using the provided name.
-* Attributes - Instead of having to manually declare a getter/setter, setup the `observedAttributes` array, and handle default values and attribute change callbacks, you simpley decorate a field with `@attr` and `FASTElement` handles that all for you.
+* **Templates** - FAST provides a high performance, reactivity-based template engine, including support for advanced MVVM.
+* **Styles** - FAST automatically detects the presence of adopted style sheets and uses them if possible. It also caches and reuses style sheet instances across Web Component instances for improved performance and memory management.
+* **FASTElement** - The base class automatically sets up the Shadow DOM and hooks into the lifecycle to handle rendering with the provided template. The decorator provides a declarative way to connect your template, styles, and class, while registering them with the platform using the provided name.
+* **Attributes** - Instead of having to manually declare a getter/setter, setup the `observedAttributes` array, and handle default values and attribute change callbacks, you simply decorate a field with `@attr` and `FASTElement` handles that all for you.
 
 This is only a small example of how FAST can help you build modern Web Components. It has much more to offer, especially if you want to build entire design systems, or full applications with routing, SSR, dependency injection, and advanced state management.
 
-* [Find FAST here on GitHub.](https://github.com/microsoft/fast)
+* [Find FAST on GitHub.](https://github.com/microsoft/fast)
 * [Explore the full FAST Documentation.](https://www.fast.design/docs/introduction/)
 
