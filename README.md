@@ -9,8 +9,8 @@ Below I'll provide step by step directions, code samples, and a few notes.
 ## Step Zero
 
 * Start with a basic HTML document that has an empty JS module script.
-* In the body of the document, add a `name-tag` component representing what we want to get working.
-* Start a web server and browse to your HTML file where you should see the text "Web Components".
+* In the body of the document, add a `name-tag` element representing what we would like to get working.
+* Start a web server and browse to your HTML file. You should see the text "Web Components" rendered.
   * I use `http-server -c-0` because I've got Node.js and the `http-server` package globally installed, but you can use whatever platform you've got available.
 
 #### index.html
@@ -36,7 +36,7 @@ Below I'll provide step by step directions, code samples, and a few notes.
 
 ## Step One
 
-* In your JavaScript file, declare the behavior for your `name-tag` custom element by creating `class` named `NameTag` that extends from `HTMLElement`.
+* In your JavaScript file, declare the behavior for your `name-tag` custom element by creating a `class` named `NameTag` that extends from `HTMLElement`.
 * Register your element with the browser by calling `customElements.define(...)`, providing your desired HTML tag name and the class that implements the component.
 * When you refresh the browser, you should still see the same text as before. However, if you inspect the `name-tag` element, you will see that it's not only an HTMLElement but that its constructor is `NameTag`.
 
@@ -52,10 +52,10 @@ customElements.define('name-tag', NameTag);
 
 ## Step Two
 
-* Add a constructor and call `this.attachShadow(...)` to create a Shadow DOM tree that will describe how your custom element renders itself. Pass `mode: 'open'` so that the `shadowRoot` and internal elements are still accessible from the outside. Using `open` mode is the standard practice. Make sure you have a strong case for `closed` mode before choosing to go that way.
+* Add a constructor and call `this.attachShadow(...)` to create a Shadow DOM tree that will describe how your custom element renders itself. Pass `mode: 'open'` so that the `shadowRoot` and internal elements are still accessible from the outside via JavaScript. Using `open` mode is the standard practice. Make sure you have a strong case for `closed` mode before choosing to go that way.
 * Once the Shadow DOM is attached, you can access `this.shadowRoot` and set its `innerHTML` to the HTML of your choosing.
 * Refresh the browser and observe that your `innerHTML`'s content is now rendering, but we no longer can see the content of the element being rendered. Where has it gone?
-* Open the inspector and observe that there's a `#shadow-root` node that you can inspect to see what you provided as `innerHTML`. Your content is still in the DOM as well, but it isn't rendering. This is because the browser does not know how to compose your content into the Shadow DOM.
+* Open the inspector and observe that there's a `#shadow-root` node that you can inspect to see what you provided as `innerHTML`. Your content is still in the DOM as well, but it isn't rendering. This is because the browser does not know how to compose your content into the Shadow DOM. We'll fix that next.
 
 #### index.js
 
@@ -98,11 +98,11 @@ If you've ever worked with XAML, you can draw a parallel from Light DOM to XAML'
 
 ## Step Four
 
-* To enable our `greeting` attribute to work, we'll need to tell the platform that there's a `greeting` attribute we want to observe. Create a static getter named `observedAttributes` that returns an array of attribute names to observe.
-* Next implement an `attributeChangedCallback` so the platform can inform you whenever any of your observed attributes change.
+* To enable our `greeting` attribute to work, we'll need to tell the platform that there's a `greeting` attribute we want to observe. Create a static getter named `observedAttributes` that returns an array of attribute names for the platform to observe.
+* Next implement an `attributeChangedCallback` so the platform can inform the element whenever any of its observed attributes change.
 * Add a property getter/setter to provide property access to the attribute, since most HTML elements have both properties and attributes. This will ensure our custom element feels like anything else in the platform and that it works correctly with popular front-end frameworks that set both attributes and properties.
-* Extract a `render` function that takes the component as input and call it from the `attributeChangedCallback` so that we can update the rendering as things change.
-* We can also introduce a `connectedCallback` which the platform will call when the element is connected to the document. We'll use this to ensure that we've got a default value for `greeting` if one wasn't set.
+* Extract a `render` function that takes the component as input and call it from the `attributeChangedCallback` so that it can update its rendering as state changes.
+* We can also introduce a `connectedCallback` which the platform will call when the element is connected to the document. We'll use this to ensure that we've got a default value for `greeting` if one wasn't set by connection time.
 * Refresh the browser to see that the `greeting` attribute is now taking effect. Experiment by setting the `greeting` property and the `greeting` attribute and placing breakpoints in the `attributeChangedCallback`.
 
 #### index.js
@@ -144,7 +144,7 @@ customElements.define('name-tag', NameTag);
 
 ## Step Five
 
-* Let's improve our `render` function so that it provides a more realistic rendering.
+* Let's improve our `render` function so that it provides a more realistic structure.
 * Refresh the browser to ensure that the new structure is rendering properly.
 
 #### index.js changes
@@ -166,12 +166,12 @@ const render = x => `
 
 ### Notes
 
-At this point you may be starting to see the amount of boilerplate involved even when creating a simple Web Component. This is because the Web Component Standards provide you with the low-level capabilities to create components, but otherwise make no assumptions about how you will implement your component internally. That's up to you to figure out. Many people use a Web Component library to remove boilerplate, automatically sync attributes and properties, and efficiently update the Shadow DOM as attributes and properties change. [Microsoft's FAST team](https://www.fast.design/) has created a small, fast, and low-memory solution named `fast-element` as well as a standard set of base classes named `fast-foundation` so that you don't need to get bogged down with boilerplate and can instead focus on interesting details. See the Resources section of this document for more information.
+At this point you may be starting to see the amount of boilerplate involved even when creating a simple Web Component. This is because the Web Component standards provide you with the low-level capabilities to create components, but otherwise make no assumptions about how you will implement your component internally. That's up to you to figure out. Many people use a Web Component library to remove boilerplate, automatically sync attributes and properties, and efficiently update the Shadow DOM as attributes and properties change. [Microsoft's FAST team](https://www.fast.design/) has created a small, fast, and low-memory solution named `fast-element` as well as a standard set of base classes named `fast-foundation` so that you don't need to get bogged down with boilerplate and can instead focus on the interesting details of your project. See the Bonus section for more details.
 
 ## Step Six
 
 * Leveraging the new standards of Constructible StyleSheets and Adopted StyleSheets, create a `CSSStyleSheet` instance and call `replaceSync` to set its CSS text.
-* In your components constructor, append your custom styles to the existing `adoptedStyleSheets` of the `shadowRoot`.
+* In your element constructor, append your custom styles to the existing `adoptedStyleSheets` of the `shadowRoot`.
 * Refresh your browser to see a fully styled component.
 
 #### index.js changes
@@ -244,7 +244,7 @@ constructor() {
 }
 ```
 
-Congratulations! You've created a a W3C standard platform Web Component with an encapsulted Shadow DOM for HTML and CSS rendering, attribute reaactivity, and lifecycle intgration.
+Congratulations! You've created a a W3C standard platform Web Component with an encapsulted Shadow DOM for HTML and CSS rendering, attribute reaactivity, and lifecycle integration.
 
 ## Going Deeper
 
@@ -265,13 +265,13 @@ Shadow DOM styles can also leverage special selectors, such as the `:host`, whic
 
 ### Adopted Style Sheeets
 
-Since `adoptedStyleSheets` is not yet implemented in all browsers (I'm looking at you Safari!), for any production components you make, you'll want to feature detect and fallback to style injection if needed. This is something that many Web Component libraries (e.g. FAST) handle for you automatically.
+Since `adoptedStyleSheets` is not yet implemented in all browsers (I'm looking at you Safari!), for any production components you make, you'll want to feature detect and fallback to style element injection if needed. This is something that many Web Component libraries (e.g. FAST) handle for you automatically.
 
 * [Read more about adopted style sheets on MDN.](https://developer.mozilla.org/en-US/docs/Web/API/ShadowRoot/adoptedStyleSheets)
 
 ### Parts
 
-You may have noticed that several elements in the component's shadow DOM have a `part` attribute. This allows a web component developer to declare parts of the component that can be styled externally by consumers of the component. To try it out, create several `<name-tag>` elements on your page, each with a different `class`. Then create CSS that targets parts based on a class selector and adjusts the greeting styles. Here's what that might look like:
+You may have noticed that several elements in the element's shadow DOM have a `part` attribute. This allows a web component developer to declare parts of the component that can be styled externally by consumers of the component. To try it out, create several `<name-tag>` elements on your page, each with a different `class`. Then create CSS that targets parts based on a class selector and adjusts the greeting styles. Here's what that might look like:
 
 ```css
 .large-greeting::part(greeting) {
