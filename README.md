@@ -1,6 +1,8 @@
 # Hello Web Components
 
-Let's build a Web Component! I like to start with something simple that many of us have familiarity with from the "real world." So, let's build a "name tag" that looks something like this...
+If you've heard about Web Components but have never built one yourself, you've come to the right place. The time has come! Let's build a Web Component together!
+
+When I have the opportunity to teach folks about Web Components, I usually like to start with something simple that many of us have familiarity with from the "real world." So, let's build a Web Component "name tag" that looks something like this...
 
 ![Name Tag Example Image](./img/example.png)
 
