@@ -281,6 +281,18 @@ You may have noticed that several elements in the element's shadow DOM have a `p
 
 * [Read more about ::part on MDN.](https://developer.mozilla.org/en-US/docs/Web/CSS/::part)
 
+### The Element Lifecycle
+
+In our `NameTag` element, we used the `connectedCallback`, which is one of the standard Web Component lifecycle hooks. But, it's not the only one. Here's the full list of available lifecycle callbacks:
+
+| Callback | Description |
+| ------------- |-------------|
+| constructor | Runs when the element is created or upgraded. |
+| connectedCallback | Runs when the element is inserted into the DOM. |
+| disconnectedCallback | Runs when the element is removed from the DOM. |
+| attributeChangedCallback(attrName, oldVal, newVal) | Runs any time one of the element's custom attributes changes. |
+| adoptedCallback | Runs if the element was moved from its current `document` into a new `document` via a call to the `adoptNode(...)` API. |
+
 ## Bonus: FAST NameTag
 
 As mentioned earlier, the amount of boilerplate involved when creating a simple Web Component seems a bit much. This is because the Web Component standards provide you with the low-level capabilities to create components, but otherwise make no assumptions about how you will implement your component internally. Many people will use a Web Component helper library, such as FAST, to streamline the creation process and provide them with additional tools for building more complex solutions. Here's how the same `NameTag` Web Component would be implemented with FAST, using TypeScript:
