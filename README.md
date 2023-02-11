@@ -246,7 +246,7 @@ constructor() {
 }
 ```
 
-Congratulations! You've created a a W3C standard platform Web Component with an encapsulted Shadow DOM for HTML and CSS rendering, attribute reaactivity, and lifecycle integration.
+Congratulations! You've created a W3C standard platform Web Component with Vanilla JS! It has an encapsulated Shadow DOM for HTML and CSS rendering, attribute reactivity, and lifecycle integration. Read on to go a bit deeper and discover some additional learning resources and libraries.
 
 ## Going Deeper
 
@@ -271,7 +271,7 @@ Since `adoptedStyleSheets` is not yet implemented in all browsers (I'm looking a
 
 * [Read more about adopted style sheets on MDN.](https://developer.mozilla.org/en-US/docs/Web/API/ShadowRoot/adoptedStyleSheets)
 
-### Parts
+### CSS Parts
 
 You may have noticed that several elements in the element's shadow DOM have a `part` attribute. This allows a web component developer to declare parts of the component that can be styled externally by consumers of the component. To try it out, create several `<name-tag>` elements on your page, each with a different `class`. Then create CSS that targets parts based on a class selector and adjusts the greeting styles. Here's what that might look like:
 
@@ -283,7 +283,7 @@ You may have noticed that several elements in the element's shadow DOM have a `p
 
 * [Read more about ::part on MDN.](https://developer.mozilla.org/en-US/docs/Web/CSS/::part)
 
-### The Element Lifecycle
+### The Web Component Lifecycle
 
 In our `NameTag` element, we used the `connectedCallback`, which is one of the standard Web Component lifecycle hooks. But, it's not the only one. Here's the full list of available lifecycle callbacks:
 
@@ -295,7 +295,7 @@ In our `NameTag` element, we used the `connectedCallback`, which is one of the s
 | attributeChangedCallback(attrName, oldVal, newVal) | Runs any time one of the element's custom attributes changes. |
 | adoptedCallback | Runs if the element was moved from its current `document` into a new `document` via a call to the `adoptNode(...)` API. |
 
-## Bonus: FAST NameTag
+## Bonus: A FAST NameTag
 
 As mentioned earlier, the amount of boilerplate involved when creating a simple Web Component seems a bit much. This is because the Web Component standards provide you with the low-level capabilities to create components, but otherwise make no assumptions about how you will implement your component internally. Many people will use a Web Component helper library, such as FAST, to streamline the creation process and provide them with additional tools for building more complex solutions. Here's how the same `NameTag` Web Component would be implemented with FAST, using TypeScript:
 
