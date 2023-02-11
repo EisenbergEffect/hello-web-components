@@ -52,7 +52,7 @@ customElements.define('name-tag', NameTag);
 
 ## Step Two
 
-* Add a constructor and call `this.attachShadow(...)` to create a Shadow DOM tree that will describe how our custom element renders itself. Pass `mode: 'open'` so that the `shadowRoot` and internal elements are still accessible from the outside. Using `open` mode is the standard practice. Make sure you have a strong case for `closed` mode before choosing to go that way.
+* Add a constructor and call `this.attachShadow(...)` to create a Shadow DOM tree that will describe how your custom element renders itself. Pass `mode: 'open'` so that the `shadowRoot` and internal elements are still accessible from the outside. Using `open` mode is the standard practice. Make sure you have a strong case for `closed` mode before choosing to go that way.
 * Once the Shadow DOM is attached, you can access `this.shadowRoot` and set its `innerHTML` to the HTML of your choosing.
 * Refresh the browser and observe that your `innerHTML`'s content is now rendering, but we no longer can see the content of the element being rendered. Where has it gone?
 * Open the inspector and observe that there's a `#shadow-root` node that you can inspect to see what you provided as `innerHTML`. Your content is still in the DOM as well, but it isn't rendering. This is because the browser does not know how to compose your content into the Shadow DOM.
@@ -92,23 +92,23 @@ customElements.define('name-tag', NameTag);
 
 ### Notes
 
-Many (including me) don't find the terms "Light" and "Shadow" DOM particularly intuitive or explanatory. Instead, I like to think of the "Light" DOM as the "Semantic" DOM. This is the DOM you know and love from ages past (well for some of us it's a love/hate relationship, let's be honest). The "Shadow" DOM is what I like to think of as the "Render" DOM. It's a private document that describes how the element will render itself, without affecting the semantic HTML.
+Many (including me) don't find the terms "Light" and "Shadow" DOM particularly intuitive or explanatory. Instead, I like to think of the "Light" DOM as the "Semantic" DOM. This is the DOM you know and love from ages past. The "Shadow" DOM is what I like to think of as the "Render" DOM. It's a private document that describes how the element will render itself, without affecting the semantic HTML.
 
-If you've ever worked with XAML, you can draw a parallel from Light DOM to XAML's Logical Tree, and from Shadow DOM to XAML's Visual Tree.
+If you've ever worked with XAML, you can draw a parallel from Light DOM to XAML's Logical Tree, and from Shadow DOM to XAML's Visual Tree. Most native component models have similar concepts.
 
 ## Step Four
 
 * To enable our `greeting` attribute to work, we'll need to tell the platform that there's a `greeting` attribute we want to observe. Create a static getter named `observedAttributes` that returns an array of attribute names to observe.
 * Next implement an `attributeChangedCallback` so the platform can inform you whenever any of your observed attributes change.
 * Add a property getter/setter to provide property access to the attribute, since most HTML elements have both properties and attributes. This will ensure our custom element feels like anything else in the platform and that it works correctly with popular front-end frameworks that set both attributes and properties.
-* Extract a `render` function that takes the greeting as input and call it from the `attributeChangedCallback` so that we can update the rendering as things change.
+* Extract a `render` function that takes the component as input and call it from the `attributeChangedCallback` so that we can update the rendering as things change.
 * We can also introduce a `connectedCallback` which the platform will call when the element is connected to the document. We'll use this to ensure that we've got a default value for `greeting` if one wasn't set.
 * Refresh the browser to see that the `greeting` attribute is now taking effect. Experiment by setting the `greeting` property and the `greeting` attribute and placing breakpoints in the `attributeChangedCallback`.
 
 #### index.js
 
 ```JavaScript
-const render = greeting => `${greeting.toUpperCase()} <slot></slot>`;
+const render = x => `${x.greeting.toUpperCase()} <slot></slot>`;
 
 class NameTag extends HTMLElement {
   static get observedAttributes() {
@@ -135,7 +135,7 @@ class NameTag extends HTMLElement {
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    this.shadowRoot.innerHTML = render(this.greeting);
+    this.shadowRoot.innerHTML = render(this);
   }
 }
 
@@ -150,9 +150,9 @@ customElements.define('name-tag', NameTag);
 #### index.js changes
 
 ```JavaScript
-const render = greeting => `
+const render = x => `
   <div class="header">
-    <h3>${greeting.toUpperCase()}</h3>
+    <h3>${x.greeting.toUpperCase()}</h3>
     <h4>my name is</h4>
   </div>
 
@@ -166,7 +166,7 @@ const render = greeting => `
 
 ### Notes
 
-At this point you may be starting to see the amount of boilerplate involved even when creating a simple Web Component. This is because the Web Component Standards provide you with the low-level capabilities to create components, but otherwise make no assumptions about how you will implement your component internally. That's up to you to figure out. Many people use a Web Component library to remove boilerplate, automatically sync attributes and properties, and efficiently update the Shadow DOM as attributes and properties change. Microsoft's FAST-DNA team is working on a small, fast, and low-memory solution named `fast-element` as well as a standard set of components named `fast-components` so that you don't need to get bogged down with boilerplate and can instead focus on interesting details. See the Resources section of this document for more information.
+At this point you may be starting to see the amount of boilerplate involved even when creating a simple Web Component. This is because the Web Component Standards provide you with the low-level capabilities to create components, but otherwise make no assumptions about how you will implement your component internally. That's up to you to figure out. Many people use a Web Component library to remove boilerplate, automatically sync attributes and properties, and efficiently update the Shadow DOM as attributes and properties change. [Microsoft's FAST team](https://www.fast.design/) has created a small, fast, and low-memory solution named `fast-element` as well as a standard set of base classes named `fast-foundation` so that you don't need to get bogged down with boilerplate and can instead focus on interesting details. See the Resources section of this document for more information.
 
 ## Step Six
 
@@ -244,19 +244,27 @@ constructor() {
 }
 ```
 
+Congratulations! You've created a a W3C standard platform Web Component with an encapsulted Shadow DOM for HTML and CSS rendering, attribute reaactivity, and lifecycle intgration.
+
 ### Notes
 
-A common way to enable custom elements to be styles is to base component styles on CSS Variables (aka CSS Custom Properties). Variables are declared with the `--` prefix and referenced with the `var(...)` function. When referencing a variable, you can also provide a fallback value, which itself can be another variable. You can see this technique used throughout the CSS above. To play with this, create several `<name-tag>` elements on your page and then use the browser's style inspector to sett `--color`, `--depth`, and `--radius` properties on individual elements or on parent elements. Even though Shadow DOM encapsulates styles, CSS Variables "pierce" the Shadow DOM boundary by default.
+#### CSS Variables
 
-Shadow DOM styles can also leverage special selectors, such as the `:host`, which targets the element itself. It's a best practice to set up host styles for the default `display` and `disabled` states. Check out the `contain` CSS property for ways to improve component render performance as well. If you have special styles for element placed inside the content of your element, you can specify those by using the `::slotted()` selector.
+A common way to enable custom elements to be styled is to base component styles on CSS Variables (aka CSS Custom Properties). Variables are declared with the `--` prefix and referenced with the `var(...)` function. When referencing a variable, you can also provide a fallback value, which itself can be another variable. You can see this technique used throughout the CSS above. To play with this, create several `<name-tag>` elements on your page and then use the browser's style inspector to set `--color`, `--depth`, and `--radius` properties on individual elements or on parent elements. Even though Shadow DOM encapsulates styles, CSS Variables "pierce" the Shadow DOM boundary by default. This makes it possible to create a theming system that works across an entier component library or application.
+
+#### Shadow DOM CSS Selectors
+
+Shadow DOM styles can also leverage special selectors, such as the `:host`, which targets the element itself. It's a best practice to set up host styles for the default `display` and `disabled` states. Check out the `contain` CSS property for ways to improve component render performance as well. If you have special styles for elements placed inside the content of your element, you can specify those by using the `::slotted()` selector.
+
+#### Adopted Style Sheeets
 
 Finally, since `adoptedStyleSheets` is not yet implemented in all browser (I'm looking at you Safari), for any production components you make, you'll want to feature detect and fallback to style injection if needed. This is something that many Web Component libraries handle for you automatically.
 
 ## Resources
 
 * [Building Components](https://developers.google.com/web/fundamentals/web-components) - A series of articles from Google on building Web Components.
-* [Microsoft's FAST](https://github.com/microsoft/fast) - Where you will find the `fast-element` library source as well as the source for `fast-components`. Both are available in beta form on NPM.
-* [FAST Documentation](https://fast.design/docs/introduction/) - Docs on how to build your own Web Components with `fast-element` to reduce boilerplate, sync state, and efficiently render HTML and CSS.
+* [Microsoft's FAST](https://github.com/microsoft/fast) - Where you will find the `fast-element` library source as well as the source for `fast-foudation`. Both are available  on NPM.
+* [FAST Documentation](https://www.fast.design/docs/introduction/) - Docs on how to build your own Web Components with `fast-element` to reduce boilerplate, sync state, and efficiently render HTML and CSS.
 * [About ::slotted](https://developer.mozilla.org/en-US/docs/Web/CSS/::slotted()) - More information on using `slotted()` to style the content of your element.
 * [About ::part](https://developer.mozilla.org/en-US/docs/Web/CSS/::part) - More information on how to expose "parts" of your Shadow DOM for external styling.
 * [About CSS Contain](https://developer.mozilla.org/en-US/docs/web/css/contain) - Information on CSS containment, for improving component performance.
