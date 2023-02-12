@@ -6,8 +6,6 @@ When I have the opportunity to teach folks about Web Components, I usually like 
 
 ![Name Tag Example Image](./img/example.png)
 
-Below I'll provide step by step directions, code samples, and a few notes.
-
 ## Step Zero
 
 * Start with a basic HTML document that has an empty JS module script.
