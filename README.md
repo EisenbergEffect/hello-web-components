@@ -2,16 +2,17 @@
 
 If you've heard about Web Components but have never built one yourself, you've come to the right place. The time has come! Let's build a Web Component together!
 
-When I have the opportunity to teach folks about Web Components, I usually like to start with something simple that many of us have familiarity with from the "real world." So, let's build a Web Component "name tag" that looks something like this...
+When I have the opportunity to teach folks about Web Components, I usually like to start with something simple that many of us know from the "real world." So, let's build a Web Component "name tag" that looks something like this…
 
 ![Name Tag Example Image](./img/example.png)
 
 ## Step Zero
 
-* Start with a basic HTML document that has an empty JS module script.
-* In the body of the document, add a `name-tag` element representing what we would like to get working.
-* Start a web server and browse to your HTML file. You should see the text "Web Components" rendered.
-  * I use `http-server -c-0` because I've got Node.js and the `http-server` package globally installed, but you can use whatever platform you've got available.
+1. Start with a basic HTML document that has a JS module script pointing to a (temporarily) empty JavaScript file.
+2. In the body of the document, add a name-tag element with the text "Web Components" as its content. This is the Web Component that we would eventually like to get working.
+3. Start a web server and browse to your HTML file. You should see the text "Web Components" rendered in your browser.
+
+> You can use [the http-server package for Node.js](https://www.npmjs.com/package/http-server) or something like [the Live Server plugin for VS Code](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer). Anything that can serve static content will work though.
 
 #### index.html
 
@@ -31,7 +32,7 @@ When I have the opportunity to teach folks about Web Components, I usually like 
 #### index.js
 
 ```JavaScript
-// we'll put our web component code here soon...
+// Nothing here yet. We'll add our Web Component code in the next step.
 ```
 
 ## Step One
