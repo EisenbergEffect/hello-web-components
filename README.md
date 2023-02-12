@@ -37,9 +37,9 @@ When I have the opportunity to teach folks about Web Components, I usually like 
 
 ## Step One
 
-* In your JavaScript file, declare the behavior for your `name-tag` custom element by creating a `class` named `NameTag` that extends from `HTMLElement`.
-* Register your element with the browser by calling `customElements.define(...)`, providing your desired HTML tag name and the class that implements the component.
-* When you refresh the browser, you should still see the same text as before. However, if you inspect the `name-tag` element, you will see that it's not only an HTMLElement but that its constructor is `NameTag`.
+1. In your JavaScript file, declare the behavior for your `name-tag` custom element by creating a class named `NameTag` that extends from `HTMLElement`. All Web Components inherit from `HTMLElement` just like the built-in elements, such as `div`, `span`, and `input`.
+2. Register your element with the browser by calling `customElements.define(...)`, providing your desired HTML tag name and the `NameTag` class as arguments.
+3. Refresh the browser and you should still see the same text as before. However, if you inspect the `name-tag` element, you will see that it is not only an `HTMLElement` but that its constructor is now `NameTag` as well.
 
 #### index.js
 
@@ -50,6 +50,8 @@ class NameTag extends HTMLElement {
 
 customElements.define('name-tag', NameTag);
 ```
+
+> **IMPORTANT:** All Web Component tag names must include a hyphen. This functions as a lightweight mechanism for name spacing elements across libraries and also for preventing them from conflicting with any present or future built-in elements, such as the upcoming [selectmenu](https://css-tricks.com/the-selectmenu-element/).
 
 ## Step Two
 
