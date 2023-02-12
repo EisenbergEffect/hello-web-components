@@ -99,12 +99,12 @@ customElements.define('name-tag', NameTag);
 
 ## Step Four
 
-* To enable our `greeting` attribute to work, we'll need to tell the platform that there's a `greeting` attribute we want to observe. Create a static getter named `observedAttributes` that returns an array of attribute names for the platform to observe.
-* Next implement an `attributeChangedCallback` so the platform can inform the element whenever any of its observed attributes change.
-* Add a property getter/setter to provide property access to the attribute, since most HTML elements have both properties and attributes. This will ensure our custom element feels like anything else in the platform and that it works correctly with popular front-end frameworks that set both attributes and properties.
-* Extract a `render` function that takes the component as input and call it from the `attributeChangedCallback` so that it can update its rendering as state changes.
-* We can also introduce a `connectedCallback` which the platform will call when the element is connected to the document. We'll use this to ensure that we've got a default value for `greeting` if one wasn't set by connection time.
-* Refresh the browser to see that the `greeting` attribute is now taking effect. Experiment by setting the `greeting` property and the `greeting` attribute and placing breakpoints in the `attributeChangedCallback`.
+1. To enable our `greeting` attribute to work, we'll need to tell the platform that there is a `greeting` attribute we want to observe. Create a static getter named `observedAttributes` that returns an array of attribute names for the platform to observe. The array should contain the single attribute name: `['greeting']`.
+2. Next, implement an `attributeChangedCallback()` that the platform can invoke whenever any of its observed attributes change.
+3. Add a property getter/setter to provide property access to the attribute, since most HTML elements have both properties and attributes. This will ensure our custom element feels like anything else in the platform and that it works correctly with popular front-end frameworks that set both attributes and properties. The getter and setter can just delegate to the `gettAttribute()` and `setAttribute()` APIs of `HTMLElement`.
+4. Extract a `render` function that takes the component as input and call it from the `attributeChangedCallback()` so that it can update its rendering when the element's state changes. Remove the code that set `innerHTML` in the constructor. This is no longer needed.
+5. We can also introduce a `connectedCallback()`. The platform will call this when the element is connected to the document. We'll use this to ensure that there is a default value for `greeting` if one wasn't set by the time the element is connected.
+6. Refresh the browser to see that the `greeting` attribute is now taking effect. Experiment by using the debug tools to set the greeting property and attribute. Try placing breakpoints in the `attributeChangedCallback()`.
 
 #### index.js
 
