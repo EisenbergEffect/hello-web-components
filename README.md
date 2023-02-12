@@ -282,15 +282,13 @@ You may have noticed that several elements in the above shadow DOM have a `part`
 
 ### The Web Component Lifecycle
 
-In our `NameTag` element, we used the `connectedCallback`, which is one of the standard Web Component lifecycle hooks. But, it's not the only one. Here's the full list of available lifecycle callbacks:
+In our `NameTag` element, we used the `connectedCallback(...)`, which is one of the standard Web Component lifecycle hooks. But it's not the only one. Here's a list of available lifecycle callbacks you can use in your components:
 
-| Callback | Description |
-| ------------- |-------------|
-| constructor | Runs when the element is created or upgraded. |
-| connectedCallback | Runs when the element is inserted into the DOM. |
-| disconnectedCallback | Runs when the element is removed from the DOM. |
-| attributeChangedCallback(attrName, oldVal, newVal) | Runs any time one of the element's custom attributes changes. |
-| adoptedCallback | Runs if the element was moved from its current `document` into a new `document` via a call to the `adoptNode(...)` API. |
+* `constructor()`  - Runs when the element is created or upgraded.
+* `connectedCallback()` - Runs when the element is inserted into the DOM.
+* `disconnectedCallback()` - Runs when the element is removed from the DOM.
+* `attributedChangedCallback(attrName, oldValue, newValue)` - Runs any time one of the element's custom attributes changes.
+* `adoptedCallback()` - Runs when the element is moved from its current document into a new document via a call to the `adoptNode(…)` API.
 
 ## Bonus: A FAST NameTag
 
