@@ -101,7 +101,7 @@ customElements.define('name-tag', NameTag);
 
 1. To enable our `greeting` attribute to work, we'll need to tell the platform that there is a `greeting` attribute we want to observe. Create a static getter named `observedAttributes` that returns an array of attribute names for the platform to observe. The array should contain the single attribute name: `['greeting']`.
 2. Next, implement an `attributeChangedCallback()` that the platform can invoke whenever any of its observed attributes change.
-3. Add a property getter/setter to provide property access to the attribute, since most HTML elements have both properties and attributes. This will ensure our custom element feels like anything else in the platform and that it works correctly with popular front-end frameworks that set both attributes and properties. The getter and setter can just delegate to the `gettAttribute()` and `setAttribute()` APIs of `HTMLElement`.
+3. Add a property getter/setter to provide property access to the attribute, since most HTML elements have both properties and attributes. This will ensure our custom element feels like anything else in the platform and that it works correctly with popular front-end frameworks that set both attributes and properties. The getter and setter can just delegate to the `getAttribute()` and `setAttribute()` APIs of `HTMLElement`.
 4. Extract a `render` function that takes the component as input and call it from the `attributeChangedCallback()` so that it can update its rendering when the element's state changes. Remove the code that set `innerHTML` in the constructor. This is no longer needed.
 5. We can also introduce a `connectedCallback()`. The platform will call this when the element is connected to the document. We'll use this to ensure that there is a default value for `greeting` if one wasn't set by the time the element is connected.
 6. Refresh the browser to see that the `greeting` attribute is now taking effect. Experiment by using the debug tools to set the greeting property and attribute. Try placing breakpoints in the `attributeChangedCallback()`.
@@ -165,7 +165,7 @@ const render = x => `
 `;
 ```
 
-> **NOTE:** At this point you may be starting to see the amount of boilerplate involved when creating a Web Component. This is because the Web Component standards provide you with the low-level capabilities to create components, but otherwise have no opinions on how you should implement your component internally.
+> **NOTE:** At this point you may be starting to see the amount of boilerplate involved when creating a Web Component. This is because the Web Component standards provide you with the low-level capabilities to create components, but otherwise have no opinions on how you should implement your component internally. See the bonus section for one way to address this.
 
 ## Step Six
 
@@ -365,12 +365,12 @@ const styles = css`
 
 // Define the element with a name, template, and styles.
 @customElement({
-  name: "name-tag",
+  name: 'name-tag',
   template,
   styles
 })
 export class NameTag extends FASTElement { // Remove boilerplate w/ base class.
-  @attr greeting = "Hello"; // A reactive HTML attribute with a default.
+  @attr greeting = 'Hello'; // A reactive HTML attribute with a default.
 }
 ```
 
@@ -385,6 +385,10 @@ Notice how all the boilerplate goes away? Here are a few things that FAST is doi
 
 This is only a small example of how FAST can help you build modern Web Components. It has much more to offer, especially if you want to build entire design systems, or full applications with routing, SSR, dependency injection, and advanced state management.
 
+Interested in learning more or joining the growing FAST and Web Component community?
+
 * [Find FAST on GitHub.](https://github.com/microsoft/fast)
 * [Explore the full FAST Documentation.](https://www.fast.design/docs/introduction/)
+* [Subscribe to the FAST Blog.](https://medium.com/fast-design)
+* [Join the FAST Discord community.](https://discord.gg/FcSNfg4)
 
