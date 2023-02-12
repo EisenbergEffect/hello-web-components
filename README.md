@@ -363,14 +363,14 @@ const styles = css`
     bord
 `;
 
-// Define the element by providing the tag name, template, and styles.
+// Define the element with a name, template, and styles.
 @customElement({
   name: "name-tag",
   template,
   styles
 })
-export class NameTag extends FASTElement { // The base class removes boilerplate.
-  @attr greeting = "Hello"; // A reactive HTML attribute with default a value.
+export class NameTag extends FASTElement { // Remove boilerplate w/ base class.
+  @attr greeting = "Hello"; // A reactive HTML attribute with a default.
 }
 ```
 
