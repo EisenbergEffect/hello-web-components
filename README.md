@@ -262,7 +262,7 @@ Shadow DOM styles can also leverage special selectors, such as the `:host`, whic
 * [Read more about ::slotted on MDN.](https://developer.mozilla.org/en-US/docs/Web/CSS/::slotted)
 * [Read more about CSS Contain on MDN.](https://developer.mozilla.org/en-US/docs/web/css/contain)
 
-### Adopted Style Sheeets
+### Adopted Style Sheets
 
 Since `adoptedStyleSheets` is not yet implemented in all browsers (I'm looking at you Safari!), for any production components you make, you'll want to feature detect and fallback to style element injection if needed. This is something that many Web Component libraries (e.g. FAST) handle for you automatically.
 
