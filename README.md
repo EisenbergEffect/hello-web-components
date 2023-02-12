@@ -165,9 +165,7 @@ const render = x => `
 `;
 ```
 
-### Notes
-
-At this point you may be starting to see the amount of boilerplate involved even when creating a simple Web Component. This is because the Web Component standards provide you with the low-level capabilities to create components, but otherwise make no assumptions about how you will implement your component internally. That's up to you to figure out. Many people use a Web Component library to remove boilerplate, automatically sync attributes and properties, and efficiently update the Shadow DOM as attributes and properties change. [Microsoft's FAST team](https://www.fast.design/) has created a small, fast, and low-memory solution named `fast-element` as well as a standard set of base classes named `fast-foundation` so that you don't need to get bogged down with boilerplate and can instead focus on the interesting details of your project. See the Bonus section for more details.
+> **NOTE:** At this point you may be starting to see the amount of boilerplate involved when creating a Web Component. This is because the Web Component standards provide you with the low-level capabilities to create components, but otherwise have no opinions on how you should implement your component internally.
 
 ## Step Six
 
