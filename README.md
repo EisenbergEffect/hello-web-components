@@ -33,7 +33,7 @@ When I have the opportunity to teach folks about Web Components, I usually like 
 // Nothing here yet. We'll add our Web Component code in the next step.
 ```
 
-> **NOTE:** You can use [the http-server package for Node.js](https://www.npmjs.com/package/http-server) or something like [the Live Server plugin for VS Code](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer). Anything that can serve static content will work though.
+> **NOTE:** If you aren't sure what to use for a web server, you can use [the http-server package for Node.js](https://www.npmjs.com/package/http-server) or something like [the Live Server plugin for VS Code](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer). Anything that can serve static content will work though.
 
 ## Step One
 
