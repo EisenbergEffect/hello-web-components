@@ -12,8 +12,6 @@ When I have the opportunity to teach folks about Web Components, I usually like 
 2. In the body of the document, add a name-tag element with the text "Web Components" as its content. This is the Web Component that we would eventually like to get working.
 3. Start a web server and browse to your HTML file. You should see the text "Web Components" rendered in your browser.
 
-> **NOTE:** You can use [the http-server package for Node.js](https://www.npmjs.com/package/http-server) or something like [the Live Server plugin for VS Code](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer). Anything that can serve static content will work though.
-
 #### index.html
 
 ```HTML
@@ -34,6 +32,8 @@ When I have the opportunity to teach folks about Web Components, I usually like 
 ```JavaScript
 // Nothing here yet. We'll add our Web Component code in the next step.
 ```
+
+> **NOTE:** You can use [the http-server package for Node.js](https://www.npmjs.com/package/http-server) or something like [the Live Server plugin for VS Code](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer). Anything that can serve static content will work though.
 
 ## Step One
 
@@ -270,7 +270,7 @@ Since `adoptedStyleSheets` is not yet implemented in all browsers (I'm looking a
 
 ### CSS Parts
 
-You may have noticed that several elements in the element's shadow DOM have a `part` attribute. This allows a web component developer to declare parts of the component that can be styled externally by consumers of the component. To try it out, create several `<name-tag>` elements on your page, each with a different `class`. Then create CSS that targets parts based on a class selector and adjusts the greeting styles. Here's what that might look like:
+You may have noticed that several elements in the above shadow DOM have a `part` attribute. This allows a web component developer to declare parts of the component that can be styled externally by consumers of the component. To try it out, create several `<name-tag>` elements on your page, each with a different `class`. Then create CSS that targets parts based on a class selector and adjusts the greeting styles. Here's what that might look like:
 
 ```css
 .large-greeting::part(greeting) {
