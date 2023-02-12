@@ -78,8 +78,8 @@ customElements.define('name-tag', NameTag);
 
 ## Step Three
 
-* Revise the HTML that is being placed into the `shadowRoot` so that it includes a `<slot>` element. This tells the browser how to compose your Light DOM and Shadow DOM together. The `slot` provides a location to "project" or render the Light DOM content into the Shadow DOM. The content still lives in the Light DOM, but it is rendered as if it were at the location of the `<slot>`.
-* Refresh your browser and observe that now both your Light and Shadow DOM content are properly composed.
+1. Revise the HTML that is being placed into the shadow root so that it includes a `<slot>` element. This tells the browser how to compose your Light DOM and Shadow DOM together. The slot provides a location to "project" or render the Light DOM content into the Shadow DOM. The content still exists in the Light DOM, but it is rendered as if it were at the location of the slot.
+2. Refresh your browser and observe that now both your Light and Shadow DOM content are properly composed together.
 
 #### index.js
 
@@ -95,11 +95,7 @@ class NameTag extends HTMLElement {
 customElements.define('name-tag', NameTag);
 ```
 
-### Notes
-
-Many (including me) don't find the terms "Light" and "Shadow" DOM particularly intuitive or explanatory. Instead, I like to think of the "Light" DOM as the "Semantic" DOM. This is the DOM you know and love from ages past. The "Shadow" DOM is what I like to think of as the "Render" DOM. It's a private document that describes how the element will render itself, without affecting the semantic HTML.
-
-If you've ever worked with XAML, you can draw a parallel from Light DOM to XAML's Logical Tree, and from Shadow DOM to XAML's Visual Tree. Most native component models have similar concepts.
+> **NOTE:** Many don't find the terms "Light" and "Shadow" DOM particularly intuitive or explanatory. Instead, it may be useful to think of the "Light" DOM as the "Semantic" DOM. The "Shadow" DOM can then be thought of as the "Render" DOM. Shadow DOM is a private document that describes how the element will render itself, without affecting semantics. Most native component models have similar concepts, e.g., Logical vs. Visual trees.
 
 ## Step Four
 
