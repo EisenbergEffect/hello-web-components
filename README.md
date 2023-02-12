@@ -145,8 +145,8 @@ customElements.define('name-tag', NameTag);
 
 ## Step Five
 
-* Let's improve our `render` function so that it provides a more realistic structure.
-* Refresh the browser to ensure that the new structure is rendering properly.
+1. Let's improve our `render` function so that it provides a more realistic structure.
+2. Refresh the browser to ensure that the new structure is rendering properly.
 
 #### index.js changes
 
@@ -169,9 +169,9 @@ const render = x => `
 
 ## Step Six
 
-* Leveraging the new standards of Constructible StyleSheets and Adopted StyleSheets, create a `CSSStyleSheet` instance and call `replaceSync` to set its CSS text.
-* In your element constructor, append your custom styles to the existing `adoptedStyleSheets` of the `shadowRoot`.
-* Refresh your browser to see a fully styled component.
+1. Leveraging the new standards of Constructible StyleSheets and Adopted StyleSheets, create a `CSSStyleSheet` instance and call `replaceSync` to set its CSS text.
+2. In your element constructor, append your custom styles to the existing `adoptedStyleSheets` of the `shadowRoot`.
+3. Refresh your browser to see a fully styled component.
 
 #### index.js changes
 
