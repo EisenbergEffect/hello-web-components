@@ -292,7 +292,7 @@ In our `NameTag` element, we used the `connectedCallback(...)`, which is one of 
 
 ## Bonus: A FAST NameTag
 
-As mentioned earlier, the amount of boilerplate involved when creating a simple Web Component seems a bit much. This is because the Web Component standards provide you with the low-level capabilities to create components, but otherwise make no assumptions about how you will implement your component internally. Many people will use a Web Component helper library, such as FAST, to streamline the creation process and provide them with additional tools for building more complex solutions. Here's how the same `NameTag` Web Component would be implemented with FAST, using TypeScript:
+As mentioned earlier, the amount of boilerplate involved when creating a simple Web Component seems a bit much. This is because the Web Component standards provide the low-level capabilities only, with little to no opinions baked in. But what if a light set of optional opinions were introduced? Could that reduce the amount of code and provide other benefits? Many people building Web Component think so, and thus use some sort of small helper library. To conclude this post, I'd like to show you the same component, built with FAST, which streamlines the Web Component creation process and provides additional tools for building more complex solutions. Here's the `NameTag` Web Component implemented with FAST, using TypeScript:
 
 ```ts
 import { attr, css, customElement, FASTElement, html } from "@microsoft/fast-element";
@@ -374,7 +374,9 @@ export class NameTag extends FASTElement { // The base class removes boilerplate
 }
 ```
 
-Notice how all the boilerplate goes away. Here's what FAST is doing for you:
+> **IMPORTANT:** Before being able to run the above code, you would need to install `@microsoft/fast-element` from NPM and set up TypeScript with the module loader/bundler of your choosing.
+
+Notice how all the boilerplate goes away? Here are a few things that FAST is doing for you:
 
 * **Templates** - FAST provides a high performance, reactivity-based template engine, including support for advanced MVVM.
 * **Styles** - FAST automatically detects the presence of adopted style sheets and uses them if possible. It also caches and reuses style sheet instances across Web Component instances for improved performance and memory management.
