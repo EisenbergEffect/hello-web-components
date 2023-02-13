@@ -55,7 +55,7 @@ customElements.define('name-tag', NameTag);
 
 ## Step Two
 
-1. Add a constructor to your class. After the call to `super()`, call `this.attachShadow(...)`  to create a Shadow DOM tree that your custom element will use for rendering. Pass the options `{ mode: 'open' }` so that the shadow root and its internal elements are still accessible externally via JavaScript and via the developer tools. 
+1. Add a constructor to your class. After the call to `super()`, call `this.attachShadow(...)`  to create a Shadow DOM for your custom element. A Shadow DOM is like having a private HTML document that only your component can render to. Pass the options `{ mode: 'open' }` so that the shadow root and its internal elements are still accessible externally via JavaScript and via the developer tools. 
 2. Once the Shadow DOM is attached, you can access this.shadowRoot and set its innerHTML property to the HTML of your choosing.
 3. Refresh the browser and observe that your Shadow DOM `innerHTML` content is now rendering but that the content of the element itself, the text "Web Components", is no longer being rendered. Where has it gone?
 4. Open the inspector and verify that there's a `#shadow-root` node that you can inspect to see what you provided as `innerHTML`. Note that your content is still in the DOM as well, even though it isn't rendering. The reason it isn't rendering is because the browser does not know how to compose the Light DOM content with the Shadow DOM. We'll fix that next.
