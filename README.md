@@ -51,7 +51,7 @@ class NameTag extends HTMLElement {
 customElements.define('name-tag', NameTag);
 ```
 
-> **IMPORTANT:** All Web Component tag names must include a hyphen. This functions as a lightweight mechanism for name spacing elements across libraries and also for preventing them from conflicting with any present or future built-in elements, such as the upcoming [selectmenu](https://css-tricks.com/the-selectmenu-element/).
+> **IMPORTANT:** All Web Component tag names must include a hyphen. This functions as a lightweight mechanism for name spacing elements across libraries and also for preventing them from conflicting with any present or future built-in elements, such as the upcoming [selectlist](https://open-ui.org/components/selectlist/).
 
 ## Step Two
 
@@ -165,12 +165,12 @@ const render = x => `
 `;
 ```
 
-> **NOTE:** At this point you may be starting to see the amount of boilerplate involved when creating a Web Component. This is because the Web Component standards provide you with the low-level capabilities to create components, but otherwise have no opinions on how you should implement your component internally. See the bonus section for one way to address this.
+> **NOTE:** At this point you may be starting to see the amount of boilerplate involved when creating a Web Component. This is because the Web Component standards provide you with the low-level capabilities to create components, but otherwise have no opinions on how you should implement your component internally. To eliminate boilerplate, you can build your own helper library [as I teach in my course](https://bluespire.com/p/web-component-engineering), or you can use a library like [FAST](https://www.fast.design/) or [Lit](https://lit.dev/).
 
 ## Step Six
 
-1. Leveraging the new standards of Constructible StyleSheets and Adopted StyleSheets, create a `CSSStyleSheet` instance and call `replaceSync` to set its CSS text.
-2. In your element constructor, append your custom styles to the existing `adoptedStyleSheets` of the `shadowRoot`.
+1. Leveraging Constructible StyleSheets and Adopted StyleSheets, create a `CSSStyleSheet` instance and call `replaceSync` to set its CSS text.
+2. In your element constructor, push your custom styles into the existing `adoptedStyleSheets` of the `shadowRoot`.
 3. Refresh your browser to see a fully styled component.
 
 #### index.js changes
@@ -236,10 +236,7 @@ styles.replaceSync(`
 constructor() {
   super();
   this.attachShadow({ mode: 'open' });
-  this.shadowRoot.adoptedStyleSheets = [
-    ...this.shadowRoot.adoptedStyleSheets,
-    styles
-  ];
+  this.shadowRoot.adoptedStyleSheets.push(styles);
 }
 ```
 
@@ -262,12 +259,6 @@ Shadow DOM styles can also leverage special selectors, such as the `:host`, whic
 * [Read more about ::slotted on MDN.](https://developer.mozilla.org/en-US/docs/Web/CSS/::slotted)
 * [Read more about CSS Contain on MDN.](https://developer.mozilla.org/en-US/docs/web/css/contain)
 
-### Adopted Style Sheets
-
-Since `adoptedStyleSheets` is not yet implemented in all browsers (I'm looking at you Safari!), for any production components you make, you'll want to feature detect and fallback to style element injection if needed. This is something that many Web Component libraries (e.g. FAST) handle for you automatically.
-
-* [Read more about adopted style sheets on MDN.](https://developer.mozilla.org/en-US/docs/Web/API/ShadowRoot/adoptedStyleSheets)
-
 ### CSS Parts
 
 You may have noticed that several elements in the above shadow DOM have a `part` attribute. This allows a web component developer to declare parts of the component that can be styled externally by consumers of the component. To try it out, create several `<name-tag>` elements on your page, each with a different `class`. Then create CSS that targets parts based on a class selector and adjusts the greeting styles. Here's what that might look like:
@@ -284,111 +275,20 @@ You may have noticed that several elements in the above shadow DOM have a `part`
 
 In our `NameTag` element, we used the `connectedCallback(...)`, which is one of the standard Web Component lifecycle hooks. But it's not the only one. Here's a list of available lifecycle callbacks you can use in your components:
 
-* `constructor()`  - Runs when the element is created or upgraded.
-* `connectedCallback()` - Runs when the element is inserted into the DOM.
-* `disconnectedCallback()` - Runs when the element is removed from the DOM.
-* `attributedChangedCallback(attrName, oldValue, newValue)` - Runs any time one of the element's custom attributes changes.
-* `adoptedCallback()` - Runs when the element is moved from its current document into a new document via a call to the `adoptNode(…)` API.
+| Callback | Description |
+| :-- | :-- |
+| `constructor()` | Runs when the element is created or upgraded. |
+| `connectedCallback()` | Runs when the element is inserted into the DOM. |
+| `disconnectedCallback()` | Runs when the element is removed from the DOM. |
+| `attributedChangedCallback(attrName, oldValue, newValue)` | Runs any time one of the element's custom attributes changes. |
+| `adoptedCallback()` | Runs when the element is moved from its current document into a new document via a call to the `adoptNode(...)` API. |
 
-## Bonus: A FAST NameTag
+## Next Steps
 
-As mentioned earlier, the amount of boilerplate involved when creating a simple Web Component seems a bit much. This is because the Web Component standards provide the low-level capabilities only, with little to no opinions baked in. But what if a light set of optional opinions were introduced? Could that reduce the amount of code and provide other benefits? Many people building Web Component think so, and thus use some sort of small helper library. To conclude this post, I'd like to show you the same component, built with FAST, which streamlines the Web Component creation process and provides additional tools for building more complex solutions. Here's the `NameTag` Web Component implemented with FAST, using TypeScript:
+We've only just scratched the surface of Web Components in this little tutorial. To learn more, please consider enrolling in my Web Component Engineering course.
 
-```ts
-import { attr, css, customElement, FASTElement, html } from "@microsoft/fast-element";
+[<img src="img/web-component-engineering.png">](https://bluespire.com/p/web-component-engineering)
 
-// Create a reactive template based on the element's state.
-const template = html<NameTag>`
-  <div part="header" class="header">
-    <h3 part="greeting">${x => x.greeting.toUpperCase()}</h3>
-    <h4 part="message">my name is</h4>
-  </div>
+Join me as I explore UI Engineering through the application of a broad range of modern Web Standards. With Web Components as its anchor, this course covers dozens of topics that professional UI Engineers and Designers can use on a daily basis. From DOM APIs and Web Components to modern CSS, Accessibility, Forms, Design Systems, Applications, Tools and more. Regardless of your level of experience, this course is the Web Platform resource you've been looking for.
 
-  <div part="body" class="body">
-    <slot></slot>
-  </div>
-
-  <div part="footer" class="footer"></div>
-`;
-
-// Create styles that automatically use adopted style sheets when present.
-const styles = css`
-  :host {
-    --default-color: red;
-    --default-radius: 6px;
-    --default-depth: 5px;
-
-    display: inline-block;
-    contain: content;
-    color: white;
-    background: var(--color, var(--default-color));
-    border-radius: var(--radius, var(--default-radius));
-    min-width: 325px;
-    text-align: center;
-    box-shadow: 0 0 var(--depth, var(--default-depth)) rgba(0,0,0,.5);
-  }
-
-  .header {
-    margin: 16px 0;
-    position: relative;
-  }
-
-  h3 {
-    font-weight: bold;
-    font-family: sans-serif;
-    letter-spacing: 4px;
-    font-size: 32px;
-    margin: 0;
-    padding: 0;
-  }
-
-  h4 {
-    font-family: sans-serif;
-    font-size: 18px;
-    margin: 0;
-    padding: 0;
-  }
-
-  .body {
-    background: white;
-    color: black;
-    padding: 32px 8px;
-    font-size: 42px;
-    font-family: cursive;
-  }
-
-  .footer {
-    height: 16px;
-    background: var(--color, var(--default-color));
-    bord
-`;
-
-// Define the element with a name, template, and styles.
-@customElement({
-  name: 'name-tag',
-  template,
-  styles
-})
-export class NameTag extends FASTElement { // Remove boilerplate w/ base class.
-  @attr greeting = 'Hello'; // A reactive HTML attribute with a default.
-}
-```
-
-> **IMPORTANT:** Before being able to run the above code, you would need to install `@microsoft/fast-element` from NPM and set up TypeScript with the module loader/bundler of your choosing.
-
-Notice how all the boilerplate goes away? Here are a few things that FAST is doing for you:
-
-* **Templates** - FAST provides a high performance, reactivity-based template engine, including support for advanced MVVM.
-* **Styles** - FAST automatically detects the presence of adopted style sheets and uses them if possible. It also caches and reuses style sheet instances across Web Component instances for improved performance and memory management.
-* **FASTElement** - The base class automatically sets up the Shadow DOM and hooks into the lifecycle to handle rendering with the provided template. The decorator provides a declarative way to connect your template, styles, and class, while registering them with the platform using the provided name.
-* **Attributes** - Instead of having to manually declare a getter/setter, setup the `observedAttributes` array, and handle default values and attribute change callbacks, you simply decorate a field with `@attr` and `FASTElement` handles that all for you.
-
-This is only a small example of how FAST can help you build modern Web Components. It has much more to offer, especially if you want to build entire design systems, or full applications with routing, SSR, dependency injection, and advanced state management.
-
-Interested in learning more or joining the growing FAST and Web Component community?
-
-* [Find FAST on GitHub.](https://github.com/microsoft/fast)
-* [Explore the full FAST Documentation.](https://www.fast.design/docs/introduction/)
-* [Subscribe to the FAST Blog.](https://medium.com/fast-design)
-* [Join the FAST Discord community.](https://discord.gg/FcSNfg4)
-
+**[Use code EisenbergEffect to get 5% off.](https://bluespire.com/p/web-component-engineering)** Group/team rates and PPP discounts available upon request.
