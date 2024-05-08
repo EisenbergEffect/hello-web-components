@@ -289,6 +289,4 @@ We've only just scratched the surface of Web Components in this little tutorial.
 
 [<img src="img/web-component-engineering.png">](https://bluespire.com/p/web-component-engineering)
 
-Join me as I explore UI Engineering through the application of a broad range of modern Web Standards. With Web Components as its anchor, this course covers dozens of topics that professional UI Engineers and Designers can use on a daily basis. From DOM APIs and Web Components to modern CSS, Accessibility, Forms, Design Systems, Applications, Tools and more. Regardless of your level of experience, this course is the Web Platform resource you've been looking for.
-
-**[Use code EisenbergEffect to get 5% off.](https://bluespire.com/p/web-component-engineering)** Group/team rates and PPP discounts available upon request.
+Join me as I explore UI Engineering through the application of a broad range of modern Web Standards. With Web Components as its anchor, this course covers dozens of topics that professional UI Engineers and Designers can use on a daily basis. From DOM APIs and Web Components to modern CSS, Accessibility, Forms, Design Systems, Applications, Tools and more. Regardless of your level of experience, this course is the Web Platform resource you've been looking for. Group/team rates and PPP discounts available upon request.
